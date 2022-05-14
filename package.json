@@ -27,15 +27,7 @@
     "code-generator": "ts-node code-generator.ts",
     "get:minimal": "nwget https://raw.githubusercontent.com/mavlink/mavlink/master/message_definitions/v1.0/minimal.xml -O minimal.xml",
     "get:common": "nwget https://raw.githubusercontent.com/mavlink/mavlink/master/message_definitions/v1.0/common.xml -O common.xml",
-    "get:ardupilotmega": "nwget https://raw.githubusercontent.com/mavlink/mavlink/master/message_definitions/v1.0/ardupilotmega.xml -O ardupilotmega.xml",
-    "get:uavionix": "nwget https://raw.githubusercontent.com/mavlink/mavlink/master/message_definitions/v1.0/uAvionix.xml -O uavionix.xml",
-    "get:icarous": "nwget https://raw.githubusercontent.com/mavlink/mavlink/master/message_definitions/v1.0/icarous.xml -O icarous.xml",
-    "get:asluav": "nwget https://raw.githubusercontent.com/mavlink/mavlink/master/message_definitions/v1.0/ASLUAV.xml -O asluav.xml",
-    "get:development": "nwget https://raw.githubusercontent.com/mavlink/mavlink/master/message_definitions/v1.0/development.xml -O development.xml",
-    "get:matrixpilot": "nwget https://raw.githubusercontent.com/mavlink/mavlink/master/message_definitions/v1.0/matrixpilot.xml -O matrixpilot.xml",
-    "get:paparazzi": "nwget https://raw.githubusercontent.com/mavlink/mavlink/master/message_definitions/v1.0/paparazzi.xml -O paparazzi.xml",
-    "get:ualberta": "nwget https://raw.githubusercontent.com/mavlink/mavlink/master/message_definitions/v1.0/ualberta.xml -O ualberta.xml",
-    "regenerate": "npm-run-all -p 'get:*' && npm run code-generator && npm run transpile",
+    "regenerate": "npm run code-generator && npm run transpile",
     "prepublishOnly": "npm install && npm run regenerate"
   },
   "devDependencies": {

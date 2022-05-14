@@ -1,7 +1,1 @@
 node_modules
-dist
-lib/*
-!lib/*.imports.ts
-lib/mavlink.ts
-lib/types.ts
-lib/utils.ts

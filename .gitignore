@@ -1,5 +1,4 @@
 node_modules
-*.xml
 dist
 lib/*
 !lib/*.imports.ts

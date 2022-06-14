@@ -2312,7 +2312,49 @@
       <entry value="6" name="MAV_ECHO_1D_GAIN_144">
       </entry>
     </enum>
-    <enum name="MAV_DATA_STREAM">
+	<enum name="MAV_ECHO_1D_ERRORS">
+    <deprecated since="2021-12" replaced_by="MESSAGE_INTERVAL"/>
+    <description>Operating modes of the CAN echo sounder.</description>
+    <entry value="1" name="MAV_ECHO_1D_BAR_OVER_CURRENT">
+	  <description>Bar motor over current .</description>
+      </entry>
+      <entry value="2" name="MAV_ECHO_1D_SD_FULL">
+	  <description>Full SD card.</description>
+      </entry>
+      <entry value="4" name="MAV_ECHO_1D_SD_EMPTY">
+	  <description>SD card do not put in slot.</description>
+      </entry>
+      <entry value="8" name="MAV_ECHO_1D_SD_MOUNTING_ERROR">
+      </entry>
+      <entry value="16" name="MAV_ECHO_1D_SD_WRITE_ERROR">
+      </entry>
+      <entry value="32" name="MAV_ECHO_1D_DO_NOT_USE">
+	  <description>currently not in use .</description>
+      </entry>
+      <entry value="64" name="MAV_ECHO_1D_SENSOR_ERROR">
+	  <description>Ping 1d sensor error.</description>
+      </entry>
+	  <entry value="128" name="MAV_ECHO_1D_EEPROM_ERROR">
+	  <description>EEPROM error.</description>
+      </entry>
+    </enum>
+	<enum name="MAV_ECHO_1D_BAR_STATE">
+      <deprecated since="2021-12" replaced_by="MESSAGE_INTERVAL"/>
+      <description>Operating modes of the CAN echo sounder.</description>
+      <entry value="0" name="MAV_ECHO_1D_BAR_UP">
+      </entry>
+      <entry value="1" name="MAV_ECHO_1D_BAR_GO_DOWN">
+      </entry>
+      <entry value="2" name="MAV_ECHO_1D_BAR_GO_UP">
+      </entry>
+      <entry value="3" name="MAV_ECHO_1D_BAR_DOWN">
+      </entry>
+      <entry value="4" name="MAV_ECHO_1D_BAR_GO_DOWN_ERROR">
+      </entry>
+      <entry value="5" name="MAV_ECHO_1D_BAR_GO_UP_ERROR">
+      </entry>
+  </enum>
+  <enum name="MAV_DATA_STREAM">
       <deprecated since="2015-06" replaced_by="MESSAGE_INTERVAL"/>
       <description>A data stream is not a fixed set of messages, but rather a
      recommendation to the autopilot software. Individual autopilots may or may not obey
@@ -2344,7 +2386,26 @@
       <entry value="12" name="MAV_DATA_STREAM_EXTRA3">
         <description>Dependent on the autopilot</description>
       </entry>
+      <entry value="13" name="MAV_DATA_STREAM_ECHO_1D">
+        <description>Enable ECHO_1D_SENSOR_MAIN_MSG or  ECHO_1D_SENSOR_MAIN_MSG/ECHO_1D_SENSOR_LONG_MSG depend on mode</description>
+      </entry>
     </enum>
+    <enum name="MAV_COMPONENT_ID">
+        <description>Types of components.</description>
+      <entry value="0" name="MAV_COMPONENT_CS">
+        <description>Remote control, ground control station.</description>
+      </entry>
+      <entry value="1" name="MAV_COMPONENT_BK_LOW">
+        <description>A component of a low-level on-board computer.</description>
+      </entry>
+      <entry value="2" name="MAV_COMPONENT_BK_HIGH">
+        <description>A component of a high-level on-board computer..</description>
+      </entry>
+      <entry value="3" name="MAV_COMPONENT_ECHO_1D">
+        <description>Echo sounder 1d ping ping.</description>
+      </entry>
+    </enum>
+
     <enum name="MAV_ROI">
       <deprecated since="2018-01" replaced_by="MAV_CMD_DO_SET_ROI_*"/>
       <description>The ROI (region of interest) for the vehicle. This can be
@@ -6850,15 +6911,14 @@
       <field type="uint16_t" name="humidity" units="c%">Humidity</field>
     </message>
     <!-- START OF USERS MESSAGE DTP Danil -->
-    <message id="20000" name="ECHO_1D_SENSOR_PROFILE">
+    <message id="20000" name="ECHO_1D_SENSOR_MAIN_MSG">
       <description>State of echosounder sensor ROW ping 1d</description>
       <field type="uint32_t" name="distance" units="mm" >The current return distance determined for the most recent acoustic measurement.</field>
       <field type="uint16_t" name="confidence" units="%" >Confidence in the most recent range measurement.</field>
-      <field type="uint16_t" name="transmit_duration" units="us" >The acoustic pulse length during acoustic transmission/activation.</field>
-      <field type="uint32_t" name="ping_number" >The pulse/measurement count since boot.</field>
-      <field type="uint32_t" name="scan_start" units="mm" >The beginning of the scan region in mm from the transducer.</field>
-      <field type="uint32_t" name="scan_length" units="mm" >The length of the scan region.</field>
-      <field type="uint32_t" name="gain_setting" enum="MAV_ECHO_1D_GAIN_SETTINGS">The current gain setting. 0: 0.6, 1: 1.8, 2: 5.5, 3: 12.9, 4: 30.2, 5: 66.1, 6: 144</field>
+      <field type="uint8_t" name="errors" enum="MAV_ECHO_1D_ERRORS"> Need to use MAV_ECHO_1D_ERRORS like bit flags</field>
+	  <field type="uint8_t" name="bar_state" enum="MAV_ECHO_1D_BAR_STATE"></field>
+    </message>
+	<message id="20001" name="ECHO_1D_SENSOR_LONG_MSG">
       <field type="uint16_t" name="profile_data_length" >The length of the proceeding vector field</field>
       <field type="uint8_t[225]" name="profile_data" >An array of return strength measurements taken at regular intervals across the scan region. The first element is the closest measurement to the sensor, and the last element is the farthest measurement in the scanned range.</field>
     </message>

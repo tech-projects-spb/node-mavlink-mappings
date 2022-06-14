@@ -1051,6 +1051,30 @@ export declare enum MavEcho1dGainSettings {
     'MAV_ECHO_1D_GAIN_144' = 6
 }
 /**
+ * Operating modes of the CAN echo sounder.
+ */
+export declare enum MavEcho1dErrors {
+    'BAR_OVER_CURRENT' = 1,
+    'SD_FULL' = 2,
+    'SD_EMPTY' = 4,
+    'SD_MOUNTING_ERROR' = 8,
+    'SD_WRITE_ERROR' = 16,
+    'DO_NOT_USE' = 32,
+    'SENSOR_ERROR' = 64,
+    'EEPROM_ERROR' = 128
+}
+/**
+ * Operating modes of the CAN echo sounder.
+ */
+export declare enum MavEcho1dBarState {
+    'UP' = 0,
+    'GO_DOWN' = 1,
+    'GO_UP' = 2,
+    'DOWN' = 3,
+    'GO_DOWN_ERROR' = 4,
+    'GO_UP_ERROR' = 5
+}
+/**
  * A data stream is not a fixed set of messages, but rather a
  recommendation to the autopilot
  * software. Individual autopilots may or may not obey
@@ -1065,7 +1089,17 @@ export declare enum MavDataStream {
     'POSITION' = 6,
     'EXTRA1' = 10,
     'EXTRA2' = 11,
-    'EXTRA3' = 12
+    'EXTRA3' = 12,
+    'ECHO_1D' = 13
+}
+/**
+ * Types of components.
+ */
+export declare enum MavComponentId {
+    'CS' = 0,
+    'BK_LOW' = 1,
+    'BK_HIGH' = 2,
+    'ECHO_1D' = 3
 }
 /**
  * The ROI (region of interest) for the vehicle. This can be
@@ -12972,7 +13006,7 @@ export declare class HygrometerSensor extends MavLinkData {
 /**
  * State of echosounder sensor ROW ping 1d
  */
-export declare class Echo1dSensorProfile extends MavLinkData {
+export declare class Echo1dSensorMainMsg extends MavLinkData {
     static MSG_ID: number;
     static MSG_NAME: string;
     static PAYLOAD_LENGTH: number;
@@ -12989,28 +13023,20 @@ export declare class Echo1dSensorProfile extends MavLinkData {
      */
     confidence: uint16_t;
     /**
-     * The acoustic pulse length during acoustic transmission/activation.
-     * Units: us
+     * Need to use MAV_ECHO_1D_ERRORS like bit flags
      */
-    transmitDuration: uint16_t;
-    /**
-     * The pulse/measurement count since boot.
-     */
-    pingNumber: uint32_t;
-    /**
-     * The beginning of the scan region in mm from the transducer.
-     * Units: mm
-     */
-    scanStart: uint32_t;
-    /**
-     * The length of the scan region.
-     * Units: mm
-     */
-    scanLength: uint32_t;
-    /**
-     * The current gain setting. 0: 0.6, 1: 1.8, 2: 5.5, 3: 12.9, 4: 30.2, 5: 66.1, 6: 144
-     */
-    gainSetting: MavEcho1dGainSettings;
+    errors: MavEcho1dErrors;
+    barState: MavEcho1dBarState;
+}
+/**
+ * ECHO_1D_SENSOR_LONG_MSG
+ */
+export declare class Echo1dSensorLongMsg extends MavLinkData {
+    static MSG_ID: number;
+    static MSG_NAME: string;
+    static PAYLOAD_LENGTH: number;
+    static MAGIC_NUMBER: number;
+    static FIELDS: MavLinkPacketField[];
     /**
      * The length of the proceeding vector field
      */

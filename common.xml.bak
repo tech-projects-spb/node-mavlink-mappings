@@ -6937,6 +6937,6 @@
       <field type="int32_t" name="prev_lon" units="degE7">Previous waypoint Longitude</field>
 	  <field type="int32_t" name="next_lat" units="degE7">Next waypoint Latitude</field>
       <field type="int32_t" name="next_lon" units="degE7">Next waypoint Longitude</field>
-	</message>
+  </message>
   </messages>
 </mavlink>

@@ -15729,7 +15729,7 @@ export class Echo1dSensorMainMsg extends MavLinkData {
 }
 
 /**
- * ECHO_1D_SENSOR_LONG_MSG
+ * Full data of echosounder sensor ROW ping 1d
  */
 export class Echo1dSensorLongMsg extends MavLinkData {
   static MSG_ID = 20001
@@ -15752,6 +15752,91 @@ export class Echo1dSensorLongMsg extends MavLinkData {
    * measurement in the scanned range.
    */
   profileData: uint8_t[]
+}
+
+/**
+ * The state of the navigation and position controller.
+ */
+export class NavControllerOutputExtend extends MavLinkData {
+  static MSG_ID = 20100
+  static MSG_NAME = 'NAV_CONTROLLER_OUTPUT_EXTEND'
+  static PAYLOAD_LENGTH = 36
+  static MAGIC_NUMBER = 231
+
+  static FIELDS = [
+    new MavLinkPacketField('state_flags', 'stateFlags', 0, false, 4, 'uint32_t', ''),
+    new MavLinkPacketField('xtrack_error', 'xtrackError', 4, false, 4, 'float', 'm'),
+    new MavLinkPacketField('prev_lat', 'prevLat', 8, false, 4, 'int32_t', 'degE7'),
+    new MavLinkPacketField('prev_lon', 'prevLon', 12, false, 4, 'int32_t', 'degE7'),
+    new MavLinkPacketField('next_lat', 'nextLat', 16, false, 4, 'int32_t', 'degE7'),
+    new MavLinkPacketField('next_lon', 'nextLon', 20, false, 4, 'int32_t', 'degE7'),
+    new MavLinkPacketField('nav_thrust', 'navThrust', 24, false, 2, 'int16_t', 'deg'),
+    new MavLinkPacketField('cur_thrust', 'curThrust', 26, false, 2, 'int16_t', 'deg'),
+    new MavLinkPacketField('nav_angle', 'navAngle', 28, false, 2, 'int16_t', 'cdeg'),
+    new MavLinkPacketField('cur_angle', 'curAngle', 30, false, 2, 'int16_t', 'cdeg'),
+    new MavLinkPacketField('target_bearing', 'targetBearing', 32, false, 2, 'int16_t', 'cdeg'),
+    new MavLinkPacketField('wp_dist', 'wpDist', 34, false, 2, 'uint16_t', 'm'),
+  ]
+
+  /**
+   * Flags of state_machine
+   */
+  stateFlags: uint32_t
+  /**
+   * Target power of motor, normalized to the range [-1000,1000]
+   * Units: deg
+   */
+  navThrust: int16_t
+  /**
+   * Current power of motor, normalized to the range [-1000,1000]
+   * Units: deg
+   */
+  curThrust: int16_t
+  /**
+   * Target angle of rudder
+   * Units: cdeg
+   */
+  navAngle: int16_t
+  /**
+   * Current angle of rudder
+   * Units: cdeg
+   */
+  curAngle: int16_t
+  /**
+   * Bearing to current waypoint/target
+   * Units: cdeg
+   */
+  targetBearing: int16_t
+  /**
+   * Distance to active waypoint
+   * Units: m
+   */
+  wpDist: uint16_t
+  /**
+   * Current crosstrack error on x-y plane
+   * Units: m
+   */
+  xtrackError: float
+  /**
+   * Previous waypoint Latitude
+   * Units: degE7
+   */
+  prevLat: int32_t
+  /**
+   * Previous waypoint Longitude
+   * Units: degE7
+   */
+  prevLon: int32_t
+  /**
+   * Next waypoint Latitude
+   * Units: degE7
+   */
+  nextLat: int32_t
+  /**
+   * Next waypoint Longitude
+   * Units: degE7
+   */
+  nextLon: int32_t
 }
 
 export const REGISTRY: MavLinkPacketRegistry = {
@@ -15969,4 +16054,5 @@ export const REGISTRY: MavLinkPacketRegistry = {
   12920: HygrometerSensor,
   20000: Echo1dSensorMainMsg,
   20001: Echo1dSensorLongMsg,
+  20100: NavControllerOutputExtend,
 }

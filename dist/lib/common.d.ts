@@ -13029,7 +13029,7 @@ export declare class Echo1dSensorMainMsg extends MavLinkData {
     barState: MavEcho1dBarState;
 }
 /**
- * ECHO_1D_SENSOR_LONG_MSG
+ * Full data of echosounder sensor ROW ping 1d
  */
 export declare class Echo1dSensorLongMsg extends MavLinkData {
     static MSG_ID: number;
@@ -13047,5 +13047,74 @@ export declare class Echo1dSensorLongMsg extends MavLinkData {
      * measurement in the scanned range.
      */
     profileData: uint8_t[];
+}
+/**
+ * The state of the navigation and position controller.
+ */
+export declare class NavControllerOutputExtend extends MavLinkData {
+    static MSG_ID: number;
+    static MSG_NAME: string;
+    static PAYLOAD_LENGTH: number;
+    static MAGIC_NUMBER: number;
+    static FIELDS: MavLinkPacketField[];
+    /**
+     * Flags of state_machine
+     */
+    stateFlags: uint32_t;
+    /**
+     * Target power of motor, normalized to the range [-1000,1000]
+     * Units: deg
+     */
+    navThrust: int16_t;
+    /**
+     * Current power of motor, normalized to the range [-1000,1000]
+     * Units: deg
+     */
+    curThrust: int16_t;
+    /**
+     * Target angle of rudder
+     * Units: cdeg
+     */
+    navAngle: int16_t;
+    /**
+     * Current angle of rudder
+     * Units: cdeg
+     */
+    curAngle: int16_t;
+    /**
+     * Bearing to current waypoint/target
+     * Units: cdeg
+     */
+    targetBearing: int16_t;
+    /**
+     * Distance to active waypoint
+     * Units: m
+     */
+    wpDist: uint16_t;
+    /**
+     * Current crosstrack error on x-y plane
+     * Units: m
+     */
+    xtrackError: float;
+    /**
+     * Previous waypoint Latitude
+     * Units: degE7
+     */
+    prevLat: int32_t;
+    /**
+     * Previous waypoint Longitude
+     * Units: degE7
+     */
+    prevLon: int32_t;
+    /**
+     * Next waypoint Latitude
+     * Units: degE7
+     */
+    nextLat: int32_t;
+    /**
+     * Next waypoint Longitude
+     * Units: degE7
+     */
+    nextLon: int32_t;
 }
 export declare const REGISTRY: MavLinkPacketRegistry;

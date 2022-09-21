@@ -2404,6 +2404,9 @@
       <entry value="3" name="MAV_COMPONENT_ECHO_1D">
         <description>Echo sounder 1d ping ping.</description>
       </entry>
+	  <entry value="4" name="MAV_COMPONENT_SMART_BATTERY">
+        <description>BAttery component</description>
+      </entry>
     </enum>
 
     <enum name="MAV_ROI">
@@ -4391,6 +4394,14 @@
       <entry value="1" name="MAV_EVENT_CURRENT_SEQUENCE_FLAGS_RESET">
         <description>A sequence reset has happened (e.g. vehicle reboot).</description>
       </entry>
+    </enum>
+	<!-- USER ENUMS. -->
+	<enum name="MAV_COMMUNICATION_ERRORS">
+      <entry value="0" name="MAV_COMMUNICATION_ERROR_NONE"/>
+      <entry value="1" name="MAV_COMMUNICATION_ERROR_UART"/>
+      <entry value="2" name="MAV_COMMUNICATION_ERROR_I2C"/>
+      <entry value="4" name="MAV_COMMUNICATION_ERROR_SPI"/>
+      <entry value="8" name="MAV_COMMUNICATION_ERROR_CAN"/>
     </enum>
   </enums>
   <messages>
@@ -6918,7 +6929,7 @@
       <field type="uint8_t" name="errors" enum="MAV_ECHO_1D_ERRORS"> Need to use MAV_ECHO_1D_ERRORS like bit flags</field>
 	    <field type="uint8_t" name="bar_state" enum="MAV_ECHO_1D_BAR_STATE"></field>
     </message>
-	<message id="20001" name="ECHO_1D_SENSOR_LONG_MSG">
+	  <message id="20001" name="ECHO_1D_SENSOR_LONG_MSG">
       <description>Full data of echosounder sensor ROW ping 1d</description>
       <field type="uint16_t" name="profile_data_length" >The length of the proceeding vector field</field>
       <field type="uint8_t[225]" name="profile_data" >An array of return strength measurements taken at regular intervals across the scan region. The first element is the closest measurement to the sensor, and the last element is the farthest measurement in the scanned range.</field>
@@ -6937,6 +6948,15 @@
       <field type="int32_t" name="prev_lon" units="degE7">Previous waypoint Longitude</field>
 	  <field type="int32_t" name="next_lat" units="degE7">Next waypoint Latitude</field>
       <field type="int32_t" name="next_lon" units="degE7">Next waypoint Longitude</field>
-	</message>
+  </message>
+  <message id="20101" name="MAIN_VEHICLE_INFO">
+      <description>The state of the navigation and position controller.</description>
+      <field type="uint8_t[20]" name="serial_number">Serial manufacturer number for each unmanned vessel.</field>
+      <field type="uint32_t" name="vessel_type">Custom user type</field>
+      <field type="uint32_t" name="major_version">Major version</field>
+      <field type="uint32_t" name="mainor_version">Mainor version</field>
+      <field type="uint32_t" name="patch_version">Patch version</field>
+	  <field type="uint32_t" name="build_number">Build number</field>
+  </message>
   </messages>
 </mavlink>

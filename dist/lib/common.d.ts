@@ -1099,7 +1099,8 @@ export declare enum MavComponentId {
     'CS' = 0,
     'BK_LOW' = 1,
     'BK_HIGH' = 2,
-    'ECHO_1D' = 3
+    'ECHO_1D' = 3,
+    'SMART_BATTERY' = 4
 }
 /**
  * The ROI (region of interest) for the vehicle. This can be
@@ -2382,6 +2383,16 @@ export declare enum MavEventErrorReason {
  */
 export declare enum MavEventCurrentSequenceFlags {
     'RESET' = 1
+}
+/**
+ * MAV_COMMUNICATION_ERRORS
+ */
+export declare enum MavCommunicationErrors {
+    'NONE' = 0,
+    'UART' = 1,
+    'I2C' = 2,
+    'SPI' = 4,
+    'CAN' = 8
 }
 /**
  * The general system state. If the system is following the MAVLink standard, the system state is
@@ -13116,5 +13127,39 @@ export declare class NavControllerOutputExtend extends MavLinkData {
      * Units: degE7
      */
     nextLon: int32_t;
+}
+/**
+ * The state of the navigation and position controller.
+ */
+export declare class MainVehicleInfo extends MavLinkData {
+    static MSG_ID: number;
+    static MSG_NAME: string;
+    static PAYLOAD_LENGTH: number;
+    static MAGIC_NUMBER: number;
+    static FIELDS: MavLinkPacketField[];
+    /**
+     * Serial manufacturer number for each unmanned vessel.
+     */
+    serialNumber: uint8_t[];
+    /**
+     * Custom user type
+     */
+    vesselType: uint32_t;
+    /**
+     * Major version
+     */
+    majorVersion: uint32_t;
+    /**
+     * Mainor version
+     */
+    mainorVersion: uint32_t;
+    /**
+     * Patch version
+     */
+    patchVersion: uint32_t;
+    /**
+     * Build number
+     */
+    buildNumber: uint32_t;
 }
 export declare const REGISTRY: MavLinkPacketRegistry;

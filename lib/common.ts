@@ -1143,6 +1143,7 @@ export enum MavComponentId {
   'BK_LOW'                                         = 1,
   'BK_HIGH'                                        = 2,
   'ECHO_1D'                                        = 3,
+  'SMART_BATTERY'                                  = 4,
 }
 
 /**
@@ -2506,6 +2507,17 @@ export enum MavEventErrorReason {
  */
 export enum MavEventCurrentSequenceFlags {
   'RESET'                                          = 1,
+}
+
+/**
+ * MAV_COMMUNICATION_ERRORS
+ */
+export enum MavCommunicationErrors {
+  'NONE'                                           = 0,
+  'UART'                                           = 1,
+  'I2C'                                            = 2,
+  'SPI'                                            = 4,
+  'CAN'                                            = 8,
 }
 
 /**
@@ -15839,6 +15851,50 @@ export class NavControllerOutputExtend extends MavLinkData {
   nextLon: int32_t
 }
 
+/**
+ * The state of the navigation and position controller.
+ */
+export class MainVehicleInfo extends MavLinkData {
+  static MSG_ID = 20101
+  static MSG_NAME = 'MAIN_VEHICLE_INFO'
+  static PAYLOAD_LENGTH = 40
+  static MAGIC_NUMBER = 242
+
+  static FIELDS = [
+    new MavLinkPacketField('vessel_type', 'vesselType', 0, false, 4, 'uint32_t', ''),
+    new MavLinkPacketField('major_version', 'majorVersion', 4, false, 4, 'uint32_t', ''),
+    new MavLinkPacketField('mainor_version', 'mainorVersion', 8, false, 4, 'uint32_t', ''),
+    new MavLinkPacketField('patch_version', 'patchVersion', 12, false, 4, 'uint32_t', ''),
+    new MavLinkPacketField('build_number', 'buildNumber', 16, false, 4, 'uint32_t', ''),
+    new MavLinkPacketField('serial_number', 'serialNumber', 20, false, 1, 'uint8_t[]', '', 20),
+  ]
+
+  /**
+   * Serial manufacturer number for each unmanned vessel.
+   */
+  serialNumber: uint8_t[]
+  /**
+   * Custom user type
+   */
+  vesselType: uint32_t
+  /**
+   * Major version
+   */
+  majorVersion: uint32_t
+  /**
+   * Mainor version
+   */
+  mainorVersion: uint32_t
+  /**
+   * Patch version
+   */
+  patchVersion: uint32_t
+  /**
+   * Build number
+   */
+  buildNumber: uint32_t
+}
+
 export const REGISTRY: MavLinkPacketRegistry = {
   1: SysStatus,
   2: SystemTime,
@@ -16055,4 +16111,5 @@ export const REGISTRY: MavLinkPacketRegistry = {
   20000: Echo1dSensorMainMsg,
   20001: Echo1dSensorLongMsg,
   20100: NavControllerOutputExtend,
+  20101: MainVehicleInfo,
 }
